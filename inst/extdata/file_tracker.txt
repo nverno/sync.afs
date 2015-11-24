@@ -1,0 +1,67 @@
+################################################################################
+##
+##                          List of files to track
+##
+################################################################################
+## Would you mind just adding new data/documentation to this file,
+## so I can track it?
+## Notes:
+## - All of the files are assumed to be in `lixi kong` folder on AFS
+##   (if this isn't the case, can you let me know?)
+## - Any line starting with a '#' will be ignored, and can be used to comment
+## - Blank lines are ignored
+## - duplicated filenames will be removed when the document is updated
+## - It doesn't matter what order files are in (documentation can be mixed with datafiles)
+## - Important to **quote filenames**, so if there are spaces there won't be problems
+## - Files are only updated (on my end) if they are modified
+##   (ie. last data of file access/status change is ignored)
+## - Any of the file formats you have given me are fine (ie. sas7bdat, csv, docx, etc.)
+##
+## **Changing a filename**
+## If you change a file name, can you let me know by doing the following:
+## For example, if you changed:
+## "abba15ex.sas7bdat" to "blahblah.sas7bdat",
+## could you just change the line:
+## "abba15ex.sas7bdat"
+## to:
+## "abba15ex.sas7bdat" -> "blahblah.sas7bdat"
+##
+## So, in other words, just leave the previous name with an arrow to the new name.
+## Then, next time the files are checked, the old name will be replaced by the new name.
+
+"abba15ex.sas7bdat"
+"birchmash.sas7bdat"
+"birchmasv.sas7bdat"
+"demomas11.sas7bdat"
+"elevmas12.sas7bdat"
+"firmash.sas7bdat"
+"firmasv.sas7bdat"
+"hhcht15mas.sas7bdat"
+"hhtr15ht.sas7bdat"
+"ppsubmas10c.sas7bdat"
+"pptreemas10.sas7bdat"
+"pptreemas10bv.sas7bdat"
+"prismmas12.sas7bdat"
+"seesapmas11.sas7bdat"
+"soilmas11.sas7bdat"
+"trsaptrmas11.sas7bdat"
+"trsaptrmas11bv.sas7bdat"
+"trseedmas11.sas7bdat"
+"trspcovmas11.sas7bdat"
+"trsubmas11c.sas7bdat"
+
+################################################################################
+##
+##                            Documentation files
+##
+################################################################################
+## Note: these don't need to be listed separated, but can if you want
+"Data collected in 2015.docx"
+"Demonstration Plot Data History 1987~2011.docx"
+"Documentation_Lixi.docx"
+"ELEV data history.docx"
+"GPS data history.docx"
+"Permanent Data History 1986-2011.docx"
+"Segment Data History 1988-2012.docx"
+"Soil Data History 86~11.docx"
+"Transect Data History 1987-2011.docx"

@@ -12,5 +12,5 @@ Imports:
     dplyr,
     tools,
     igraph,
-    data.table
+    data.table (>= 1.9.6)
 RoxygenNote: 5.0.1
