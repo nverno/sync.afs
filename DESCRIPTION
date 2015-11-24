@@ -1,0 +1,16 @@
+Package: sync.afs
+Title: Sync with AFS
+Version: 0.0.0.9000
+Authors: Noah Peart
+Description: Attempt to keep up-to-date with data/documentation on AFS.
+Depends:
+    R (>= 3.2.2)
+License: GPL-2
+LazyData: true
+Imports:
+    haven,
+    dplyr,
+    tools,
+    igraph,
+    data.table
+RoxygenNote: 5.0.1
