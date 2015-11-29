@@ -1,3 +1,6 @@
+##' @include utils.R
+NULL
+
 ##' @details
 ##' Makes an igraph visualization of the file-directory structure.
 ##' 
@@ -27,3 +30,15 @@ directory_vis <- function(finfo, add_root=TRUE, ...) {
     invisible(g)
 }
 
+##' @import igraph
+##' @import data.table
+##' @param tracker Path to tracker file on AFS (has default)
+##' @param path Path to root AFS folder (has default)
+##' @param add_root Logical to add root to graph
+##' @param ... passed to plot.igraph
+data_vis <- function(tracker=file.path(get_afs(), "file_tracker.txt"),
+                     path=get_afs(), add_root=TRUE, ...) {
+  dat <- process_tracker(tracker)
+  finfo <- file_info(path, files=dat$files)
+  directory_vis(finfo, add_root, ...)
+}
