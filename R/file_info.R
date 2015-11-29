@@ -13,6 +13,7 @@
 ##'   \item filetype: file extension
 ##'}
 ##' @import data.table
+##' @export
 file_info <- function(path=if(Sys.info()[['sysname']]=='Linux') afs.linux else afs, files) {
     ## Get full file paths
     paths <- lapply(files, function(i)

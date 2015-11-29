@@ -4,6 +4,7 @@
 ##' @title process_tracker
 ##' @param tracker Path to file tracking file
 ##' @return list of two elements: filenames to track, and renamed files
+##' @export
 process_tracker <- function(
   tracker=file.path(if(Sys.info()[['sysname']]=='Linux') afs.linux else afs,
     "file_tracker.txt")) {
