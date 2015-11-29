@@ -13,7 +13,7 @@
 ##'   \item filetype: file extension
 ##'}
 ##' @import data.table
-file_info <- function(path=afs, files) {
+file_info <- function(path=if(Sys.info()[['sysname']]=='Linux') afs.linux else afs, files) {
     ## Get full file paths
     paths <- lapply(files, function(i)
         list.files(path=path, pattern=i, full.names=TRUE, recursive = TRUE))
@@ -30,7 +30,7 @@ file_info <- function(path=afs, files) {
     }))
 
     ## Drop the afs prefix
-    short <- sub(paste0(afs, "/"), '', paths, fixed=TRUE)
+    short <- sub(paste0(path, "/"), '', paths, fixed=TRUE)
     dirs <- dirname(short)
     docs <- basename(short)
 
@@ -42,3 +42,4 @@ file_info <- function(path=afs, files) {
     finfo[, filetype := tools::file_ext(short)]
     finfo[]
 }
+

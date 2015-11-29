@@ -4,14 +4,16 @@
 ##' @title process_tracker
 ##' @param tracker Path to file tracking file
 ##' @return list of two elements: filenames to track, and renamed files
-process_tracker <- function(tracker=file.path(afs, "file_tracker.txt")) {
-    doc <- readLines(tracker)
-    fileinds <- !grepl("^#|^\\s+$|^$", doc)
-    lines <- doc[fileinds]
-    renamed <- strsplit(lines, "\\s*->\\s*")
-    key <- if (any((ind <- lengths(lapply(renamed, unlist)) > 1))) renamed[ind] else list()
-    files <- basename(trimws(lines[!ind], "both"))
-    files <- unique(files[!(files %in% sapply(key, `[[`, 1))])  # in case duplicates for some reason
+process_tracker <- function(
+  tracker=file.path(if(Sys.info()[['sysname']]=='Linux') afs.linux else afs,
+    "file_tracker.txt")) {
+  doc <- readLines(tracker)
+  fileinds <- !grepl("^#|^\\s+$|^$", doc)
+  lines <- doc[fileinds]
+  renamed <- strsplit(lines, "\\s*->\\s*")
+  key <- if (any((ind <- lengths(lapply(renamed, unlist)) > 1))) renamed[ind] else list()
+  files <- basename(trimws(lines[!ind], "both"))
+  files <- unique(files[!(files %in% sapply(key, `[[`, 1))])  # in case duplicates for some reason
 
     ## If filenames were changed, rewrite the file
     if (length(key)) {
