@@ -1,3 +1,6 @@
+##' @include utils.R
+NULL
+
 ##' @title file_info
 ##' @details
 ##' Gather information about data files stored on afs.
@@ -14,7 +17,7 @@
 ##'}
 ##' @import data.table
 ##' @export
-file_info <- function(path=if(Sys.info()[['sysname']]=='Linux') afs.linux else afs, files) {
+file_info <- function(path=get_afs(), files) {
     ## Get full file paths
     paths <- lapply(files, function(i)
         list.files(path=path, pattern=i, full.names=TRUE, recursive = TRUE))

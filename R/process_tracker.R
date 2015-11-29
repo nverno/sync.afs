@@ -1,3 +1,6 @@
+##' @include utils.R
+NULL
+
 ##' @details
 ##' Process the file_tracker.txt document.  If files were renamd, replace with new names.
 ##' Also, if filenames are duplicated, they are removed.
@@ -5,9 +8,7 @@
 ##' @param tracker Path to file tracking file
 ##' @return list of two elements: filenames to track, and renamed files
 ##' @export
-process_tracker <- function(
-  tracker=file.path(if(Sys.info()[['sysname']]=='Linux') afs.linux else afs,
-    "file_tracker.txt")) {
+process_tracker <- function(tracker=file.path(get_afs(), "file_tracker.txt")) {
   doc <- readLines(tracker)
   fileinds <- !grepl("^#|^\\s+$|^$", doc)
   lines <- doc[fileinds]

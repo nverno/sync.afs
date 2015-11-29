@@ -14,3 +14,8 @@ Imports:
     igraph,
     data.table (>= 1.9.6)
 RoxygenNote: 5.0.1
+Collate:
+    'utils.R'
+    'file_info.R'
+    'process_tracker.R'
+    'vis.R'
