@@ -42,3 +42,4 @@ data_vis <- function(tracker=file.path(get_afs(), "file_tracker.txt"),
   finfo <- file_info(path, files=dat$files)
   directory_vis(finfo, add_root, ...)
 }
+
