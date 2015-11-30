@@ -10,6 +10,7 @@ NULL
 ##' @param ... Passed to plot.igraph
 ##' @return invisibly returns the graph.
 ##' @import igraph
+##' @export
 directory_vis <- function(finfo, add_root=TRUE, ...) {
     stopifnot(require(igraph))
     edges <- data.frame(dirs = finfo$directory,
@@ -36,6 +37,7 @@ directory_vis <- function(finfo, add_root=TRUE, ...) {
 ##' @param path Path to root AFS folder (has default)
 ##' @param add_root Logical to add root to graph
 ##' @param ... passed to plot.igraph
+##' @export
 data_vis <- function(tracker=file.path(get_afs(), "file_tracker.txt"),
                      path=get_afs(), add_root=TRUE, ...) {
   dat <- process_tracker(tracker)
