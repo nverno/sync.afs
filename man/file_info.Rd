@@ -4,8 +4,7 @@
 \alias{file_info}
 \title{file_info}
 \usage{
-file_info(path = if (Sys.info()[["sysname"]] == "Linux") afs.linux else afs,
-  files)
+file_info(path = get_afs(), files)
 }
 \arguments{
 \item{path}{AFS path to root directory (defaults to Lixi's folder)}

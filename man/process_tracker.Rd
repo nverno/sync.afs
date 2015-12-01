@@ -4,8 +4,7 @@
 \alias{process_tracker}
 \title{process_tracker}
 \usage{
-process_tracker(tracker = file.path(if (Sys.info()[["sysname"]] == "Linux")
-  afs.linux else afs, "file_tracker.txt"))
+process_tracker(tracker = file.path(get_afs(), "file_tracker.txt"))
 }
 \arguments{
 \item{tracker}{Path to file tracking file}
