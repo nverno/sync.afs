@@ -1,10 +1,9 @@
 ##' @include utils.R
-NULL
 
+##' @title directory_vis
 ##' @details
 ##' Makes an igraph visualization of the file-directory structure.
 ##' 
-##' @title directory_vis
 ##' @param finfo data.table(data.frame) returned from \code{data_info}
 ##' @param add_root logical whether to add root node to join all directories (default to TRUE).
 ##' @param ... Passed to plot.igraph
@@ -31,6 +30,7 @@ directory_vis <- function(finfo, add_root=TRUE, ...) {
     invisible(g)
 }
 
+##' @title data_vis
 ##' @import igraph
 ##' @import data.table
 ##' @param tracker Path to tracker file on AFS (has default)

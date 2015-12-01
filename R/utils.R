@@ -7,3 +7,9 @@ get_afs <- function() {
   else
     afs
 }
+
+##' @export
+get_smthg <- function() {
+    if (Sys.info()[['sysname']] == 'Linux') 'yes'
+    else 'no'
+}
