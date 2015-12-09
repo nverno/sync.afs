@@ -18,20 +18,20 @@ process_tracker <- function(tracker=file.path(get_afs(), "file_tracker.txt")) {
   files <- unique(files[!(files %in% sapply(key, `[[`, 1))])  # in case duplicates for some reason
 
     ## If filenames were changed, rewrite the file
-    if (length(key)) {
-        lines[ind] <- sapply(key, `[[`, 2)
-        lines <- unique(lines)
-        doc[fileinds] <- lines
-        writeLines(doc, con=tracker)
-        ## remove extra quotes from key
-        key <- rapply(key, function(x) gsub('\"|\'', '', x), how = 'replace')
-    }
+  if (length(key)) {
+      lines[ind] <- sapply(key, `[[`, 2)
+      lines <- unique(lines)
+      doc[fileinds] <- lines
+      writeLines(doc, con=tracker)
+      ## remove extra quotes from key
+      key <- rapply(key, function(x) gsub('\"|\'', '', x), how = 'replace')
+  }
 
     ## If duplicated filenames, rewrite the file with those removed
-    if (any((inds <- duplicated(lines)))) {
-        doc <- doc[sort(c(which(!fileinds), which(fileinds)[-inds]))]
-        writeLines(doc, con=tracker)
-    }
+  if (any((inds <- duplicated(lines)))) {
+      doc <- doc[sort(c(which(!fileinds), which(fileinds)[-inds]))]
+      writeLines(doc, con=tracker)
+  }
     
-    list(files=gsub('\"|\'', '', files), renamed=key)
+  list(files=gsub('\"|\'', '', files), renamed=key)
 }
