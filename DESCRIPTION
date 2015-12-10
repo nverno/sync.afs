@@ -17,6 +17,7 @@ RoxygenNote: 5.0.1
 Collate:
     'utils.R'
     'file_info.R'
+    'get_data.R'
     'make_key.R'
     'process_tracker.R'
     'vis.R'

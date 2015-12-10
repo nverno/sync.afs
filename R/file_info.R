@@ -20,8 +20,12 @@ NULL
 file_info <- function(path=get_afs(), files) {
     ## Get full file paths
     paths <- lapply(files, function(i)
-        list.files(path=path, pattern=i, full.names=TRUE, recursive = TRUE))
-
+      list.files(path=path, pattern=i, full.names=TRUE, recursive = TRUE))
+    missed <- files[!lengths(paths)]
+    if (length(missed))
+      warning(print(sprintf("Couldn't find %s", paste(missed, collapse=", "))))
+    paths <- nonEmpty(paths)
+    
     ## File info
     finfo <- data.table::rbindlist(lapply(paths, function(f) {
         info <- file.info(f)

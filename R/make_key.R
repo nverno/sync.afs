@@ -13,7 +13,9 @@ create_data_key_template <- function(path=sync.afs::get_afs()) {
   dat <- sync.afs::process_tracker()
 
   ## Get file info
-  data_key <- file_info(files = dat$files)
+  data_key <- file_info(files = c(
+                          dat$files,
+                          sapply(dat$renamed, `[[`, 2)))
 
   ## Create the data_key
   data_key[, `:=`(rname = tolower(tools::file_path_sans_ext(filename)),
@@ -25,5 +27,6 @@ create_data_key_template <- function(path=sync.afs::get_afs()) {
   
   return( data_key[] )
 }
+
 
 
