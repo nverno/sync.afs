@@ -39,7 +39,7 @@ file_info <- function(path=get_afs(), files) {
     docs <- basename(short)
 
     ## Add file/directory names
-    finfo[, `:=`(directory = dirs, doc = docs)]
+    finfo[, `:=`(directory = dirs, filename = docs)]
 
     ## Find time since modifications and file sizes
     finfo[, lastmod := as.POSIXlt(Sys.Date()) - modified]
