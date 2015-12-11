@@ -4,10 +4,10 @@
 \alias{create_data_key_template}
 \title{Create data_key}
 \usage{
-create_data_key_template(path = sync.afs::get_afs())
+create_data_key_template(tracker = file.path(get_afs(), "file_tracker.txt"))
 }
 \arguments{
-\item{path}{path to afs directory}
+\item{path}{path to file tracking document}
 }
 \value{
 data.table
@@ -17,5 +17,4 @@ data.table
   data_key <- create_data_key_template()
 }
 }
-\keyword{internal}
 

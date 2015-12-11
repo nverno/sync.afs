@@ -48,6 +48,15 @@ file_info <- function(path=get_afs(), files) {
     ## Find time since modifications and file sizes
     finfo[, lastmod := as.POSIXlt(Sys.Date()) - modified]
     finfo[, filetype := tools::file_ext(short)]
+
+    ## Create the data_key
+    finfo[, `:=`(rname = tolower(tools::file_path_sans_ext(filename)),
+                 afs_path = short)]
+
+    ## Ordering
+    ord <- c('rname', 'filename', 'modified', 'lastmod')
+    data.table::setcolorder(finfo, c(ord, setdiff(names(finfo), ord)))
+    data.table::setkeyv(finfo, cols=c('lastmod', 'filetype'))
     finfo[]
 }
 

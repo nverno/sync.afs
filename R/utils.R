@@ -7,3 +7,10 @@ get_afs <- function() {
   else
     afs
 }
+
+
+##' @title remove nulls/empty values from list
+##' @param lst list
+##' @return list w/o nulls/empty values
+##' @export
+nonEmpty <- function(lst) lst[sapply(lst, function(i) !is.null(i) && length(i))]

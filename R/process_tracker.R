@@ -12,6 +12,7 @@ process_tracker <- function(tracker=file.path(get_afs(), "file_tracker.txt")) {
   doc <- readLines(tracker)
   fileinds <- !grepl("^#|^\\s+$|^$", doc)
   lines <- doc[fileinds]
+  lines <- trimws(sub('(^[^#]+)#.*', '\\1', lines))  # remove comments/spaces
   renamed <- strsplit(lines, "\\s*->\\s*")
   key <- if (any((ind <- lengths(lapply(renamed, unlist)) > 1))) renamed[ind] else list()
   files <- basename(trimws(lines[!ind], "both"))
