@@ -22,35 +22,4 @@ update_key <- function(path=get_afs(), tracker="file_tracker.txt", data_key=data
   }
 }
 
-rbind(copy(dat)[new_dat, n3 := i.n1, on = "n2"], new_dat[!dat, on = 'n2'])
-
-
-vct_numbers <- c(1,2,3,4)
-vct_colours <- c("blue", "green", "yellow")
-lst_coll <- list(vct_numbers = vct_numbers, vct_colours  = vct_colours)
-
-library(data.table)
-
-## Example data, a keyed data.table
-dat <- data.table(c1=1:10, c2=letters[1:10], key='c2')
-
-## Match at some indices (keyed column so should be binary search?)
-new_dat <- c('d', 'j')
-
-## This doesn't feel right -- I don't think this is taking advantage of the
-## data.table ordering at all
-dat[match(new_dat, c2, 0L), ]  # only want the index of the matches
-#    c1 c2
-# 1:  4  d
-# 2: 10  j
-
-## So, looking for this result,
-## but this is just doing ordinary linear search (I say w/o actually looking at the code)
-match(new_dat, dat[['c2']], 0L)
-# [1]  4 10
-
-dat[, ind := 1:.N][match(new_dat, c2, 0L), ind]
-
-dat[new_dat, which=TRUE]
-
-dat <- data.table(c1 = 1:1e7, c2 = intToUtf8(1:1e7))
+## rbind(copy(dat)[new_dat, n3 := i.n1, on = "n2"], new_dat[!dat, on = 'n2'])
