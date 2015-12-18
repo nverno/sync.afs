@@ -19,4 +19,5 @@ test_that("Creating key works/throws warings", {
 test_that("Renaming sas files works", {
   check_afs()
   rename_file <- file.path(get_afs(), testdir, test_rename)
+  
 })
