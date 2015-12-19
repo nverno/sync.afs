@@ -4,7 +4,7 @@
 \alias{update_key}
 \title{Update the data_key with new entries/name changes}
 \usage{
-update_key(tracker = file.path(get_afs(), "file_tracker.txt"),
+update_key(path = get_afs(), tracker = "file_tracker.txt",
   data_key = data_key)
 }
 

@@ -1,4 +1,7 @@
 ##' @title Update the data_key with new entries/name changes
+##' @param path Path to base AFS directory from which to search (default to get_afs()).
+##' @param tracker Name of the text file containing filenames to track (default to 'file_tracker.txt').
+##' @param data_key The current data_key to update (default to data/data_key.rda).
 update_key <- function(path=get_afs(), tracker="file_tracker.txt", data_key=data_key) {
   tracker <- file.path(path, tracker)
   dat <- process_tracker(tracker)
@@ -23,3 +26,4 @@ update_key <- function(path=get_afs(), tracker="file_tracker.txt", data_key=data
 }
 
 ## rbind(copy(dat)[new_dat, n3 := i.n1, on = "n2"], new_dat[!dat, on = 'n2'])
+
