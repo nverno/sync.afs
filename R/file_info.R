@@ -17,46 +17,48 @@ NULL
 ##'}
 ##' @import data.table
 ##' @export
-file_info <- function(path=get_afs(), files) {
-    ## Get full file paths
-    paths <- lapply(files, function(i)
-      list.files(path=path, pattern=i, full.names=TRUE, recursive = TRUE))
-    missed <- files[!lengths(paths)]
-    if (length(missed))
-      warning(print(sprintf("Couldn't find %s", paste(missed, collapse=", "))))
-    paths <- nonEmpty(paths)
-    
-    ## File info
-    finfo <- data.table::rbindlist(lapply(paths, function(f) {
-        info <- file.info(f)
-        list(
-            'size' = info[["size"]]/1024,
-            'modified' = info[['mtime']],
-            'status_change' = info[['ctime']],
-            'accessed' = info[['atime']]
-        )
-    }))
+file_info <- function(path=get_afs(), files, fixed=TRUE) {
+  if (fixed) files <- paste0('^', files, '$')
+  
+  ## Get full file paths
+  paths <- lapply(files, function(i)
+    list.files(path=path, pattern=i, full.names=TRUE, recursive = TRUE))
+  missed <- files[!lengths(paths)]
+  if (length(missed))
+    warning(print(sprintf("Couldn't find %s", paste(missed, collapse=", "))))
+  paths <- nonEmpty(paths)
+  
+  ## File info
+  finfo <- data.table::rbindlist(lapply(paths, function(f) {
+    info <- file.info(f)
+    list(
+      'size' = info[["size"]]/1024,
+      'modified' = info[['mtime']],
+      'status_change' = info[['ctime']],
+      'accessed' = info[['atime']]
+    )
+  }))
 
-    ## Drop the afs prefix
-    short <- sub(paste0(path, "/"), '', paths, fixed=TRUE)
-    dirs <- dirname(short)
-    docs <- basename(short)
+  ## Drop the afs prefix
+  short <- sub(paste0(path, "/"), '', paths, fixed=TRUE)
+  dirs <- dirname(short)
+  docs <- basename(short)
 
-    ## Add file/directory names
-    finfo[, `:=`(directory = dirs, filename = docs)]
+  ## Add file/directory names
+  finfo[, `:=`(directory = dirs, filename = docs)]
 
-    ## Find time since modifications and file sizes
-    finfo[, lastmod := as.POSIXlt(Sys.Date()) - modified]
-    finfo[, filetype := tools::file_ext(short)]
+  ## Find time since modifications and file sizes
+  finfo[, lastmod := as.POSIXlt(Sys.Date()) - modified]
+  finfo[, filetype := tools::file_ext(short)]
 
-    ## Create the data_key
-    finfo[, `:=`(rname = tolower(tools::file_path_sans_ext(filename)),
-                 afs_path = short)]
+  ## Create the data_key
+  finfo[, `:=`(rname = tolower(tools::file_path_sans_ext(filename)),
+               afs_path = short)]
 
-    ## Ordering
-    ord <- c('rname', 'filename', 'modified', 'lastmod')
-    data.table::setcolorder(finfo, c(ord, setdiff(names(finfo), ord)))
-    data.table::setkeyv(finfo, cols=c('filename'))
-    finfo[]
+  ## Ordering
+  ord <- c('rname', 'filename', 'modified', 'lastmod')
+  data.table::setcolorder(finfo, c(ord, setdiff(names(finfo), ord)))
+  data.table::setkeyv(finfo, cols=c('filename'))
+  finfo[]
 }
 

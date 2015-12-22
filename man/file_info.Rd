@@ -4,7 +4,7 @@
 \alias{file_info}
 \title{file_info}
 \usage{
-file_info(path = get_afs(), files)
+file_info(path = get_afs(), files, fixed = TRUE)
 }
 \arguments{
 \item{path}{AFS path to root directory (defaults to Lixi's folder)}
