@@ -4,22 +4,24 @@
 \alias{get_data}
 \title{Read master data file corresponding to a R data filename}
 \usage{
-get_data(dname, ...)
+get_data(dname, data_key = data_key, ...)
 }
 \arguments{
 \item{dname}{data name in R}
 
-\item{...}{arguments to be passed to reading function}
+\item{data_key}{Key matching R data to master files.}
+
+\item{...}{arguments to be passed to data reading function}
 }
 \value{
 corresponding master file (prior to cleaning)
+}
+\description{
+Read master data associated with R data file.
 }
 \examples{
 \dontrun{
   pp_raw <- get_data('pp_raw')
 }
-}
-\author{
-Noah Peart
 }
 

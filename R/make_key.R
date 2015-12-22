@@ -1,6 +1,7 @@
-## Create data_key (as data.table) to store files/locations/info for quicker access
-##' @title Create data_key
-##' @param path path to file tracking document
+##' Create data_key (as data.table) to store files/locations/info for quicker access
+##' @title Initialize/recreate data_key from scratch (resets R data names to default).
+##' @param path Path to root directory from which to search.
+##' @param tracker Path to data tracking file.
 ##' @importFrom tools file_ext file_path_sans_ext
 ##' @import data.table
 ##' @examples
@@ -9,11 +10,12 @@
 ##' }
 ##' @return data.table
 ##' @export
-create_data_key_template <- function(tracker=file.path(get_afs(), "file_tracker.txt")) {
+create_data_key_template <- function(path=get_afs(),
+                                     tracker=file.path(get_afs(), "file_tracker.txt")) {
   dat <- process_tracker(tracker)
 
   ## Get file info
-  data_key <- file_info(files = c(dat$files, sapply(dat$renamed, `[[`, 2)))
+  data_key <- file_info(path=path, files = c(dat$files, sapply(dat$renamed, `[[`, 2)))
   
   return( data_key[] )
 }

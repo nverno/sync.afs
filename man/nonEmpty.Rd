@@ -12,4 +12,7 @@ nonEmpty(lst)
 \value{
 list w/o nulls/empty values
 }
+\description{
+Remove empty/null values from list
+}
 

@@ -1,8 +1,8 @@
 ##' @include utils.R
 NULL
 
-##' @details
-##' Process the file_tracker.txt document.  If files were renamd, replace with new names.
+##' Process the file tracking document ('file_tracker.txt').
+##' If files were renamd, replaces with new names.
 ##' Also, if filenames are duplicated, they are removed.
 ##' @title process_tracker
 ##' @param tracker Path to file tracking file

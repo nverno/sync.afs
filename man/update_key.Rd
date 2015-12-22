@@ -5,7 +5,7 @@
 \title{Update the data_key with new entries/name changes}
 \usage{
 update_key(path = get_afs(), tracker = "file_tracker.txt",
-  data_key = data_key, save_key = FALSE)
+  data_key = data_key, save_key = FALSE, src_path = "~/work/sync.afs")
 }
 \arguments{
 \item{path}{Path to base AFS directory from which to search (default to get_afs()).}
@@ -14,7 +14,13 @@ update_key(path = get_afs(), tracker = "file_tracker.txt",
 
 \item{data_key}{The current data_key to update (default to data/data_key.rda).}
 
-\item{save_key}{Save the key in the data directory?}
+\item{save_key}{Save the key in the data directory?  Use this if going to push update.}
+
+\item{src_path}{Path to package source, only used if save_key is TRUE.}
 }
-\keyword{internal}
+\description{
+Update data_key by processing the tracking document and renaming/adding
+files to data_key.  Throws error if there is an R data file associated with
+a master file that can't be found.
+}
 

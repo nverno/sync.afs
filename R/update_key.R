@@ -1,18 +1,21 @@
-## Just use this internally, cause each time the key is updated, I should
-## push the new version?
-##
+##' Update data_key by processing the tracking document and renaming/adding
+##' files to data_key.  Throws error if there is an R data file associated with
+##' a master file that can't be found.
+##'
 ##' @title Update the data_key with new entries/name changes
 ##' @param path Path to base AFS directory from which to search (default to get_afs()).
 ##' @param tracker Name of the text file containing filenames to track (default to 'file_tracker.txt').
 ##' @param data_key The current data_key to update (default to data/data_key.rda).
-##' @param save_key Save the key in the data directory?
+##' @param save_key Save the key in the data directory?  Use this if going to push update.
+##' @param src_path Path to package source, only used if save_key is TRUE.
 ##' @import data.table
-##' @keywords internal
+##' @export
 update_key <- function(path=get_afs(), tracker="file_tracker.txt", data_key=data_key,
-                       save_key=FALSE) {
+                       save_key=FALSE, src_path='~/work/sync.afs') {
   tracker <- file.path(path, tracker)
   dat <- process_tracker(tracker)
-
+  rname <- filename <- NULL
+  
   ## New files
   new_files <- dat$files[(!(dat$files %in% data_key[['filename']]))]
 
@@ -41,7 +44,7 @@ update_key <- function(path=get_afs(), tracker="file_tracker.txt", data_key=data
   ## Save
   if (save_key) {
     data_key <- finfo
-    save(data_key, file = "~/work/sync.afs/data/data_key.rda", compress='xz')
+    save(data_key, file = file.path(src_path, 'data', 'data_key.rda'), compress='xz')
   }
   finfo[]
 }

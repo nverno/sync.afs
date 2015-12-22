@@ -4,18 +4,19 @@ Version: 0.0.0.9000
 Author: Noah Peart
 Maintainer: Noah Peart <noah.v.peart@gmail.com>
 Description: Attempt to keep up-to-date with data/documentation on AFS.
-Depends: 
+Depends:
     R (>= 3.2.2)
 License: GPL-2
 LazyData: true
-Imports: 
+Imports:
     haven,
     dplyr,
     tools,
     igraph,
     data.table (>= 1.9.6)
 RoxygenNote: 5.0.1
-Collate: 
+Collate:
+    'data.R'
     'utils.R'
     'file_info.R'
     'get_data.R'
@@ -23,4 +24,5 @@ Collate:
     'process_tracker.R'
     'update_key.R'
     'vis.R'
-Suggests: testthat
+Suggests:
+    testthat

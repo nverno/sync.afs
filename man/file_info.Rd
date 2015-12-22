@@ -10,6 +10,8 @@ file_info(path = get_afs(), files, fixed = TRUE)
 \item{path}{AFS path to root directory (defaults to Lixi's folder)}
 
 \item{files}{Files to gather info about (get with process_tracker)}
+
+\item{fixed}{Match patterns exactly (surround with regexp anchors)}
 }
 \value{
 A data.table \itemize{
@@ -21,7 +23,7 @@ A data.table \itemize{
   \item filetype: file extension
 }
 }
-\details{
+\description{
 Gather information about data files stored on afs.
 }
 

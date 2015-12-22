@@ -16,6 +16,13 @@ data_vis(tracker = file.path(get_afs(), "file_tracker.txt"),
 
 \item{...}{passed to plot.igraph}
 }
+\value{
+Returns the igraph invisibly.
+}
+\description{
+Wrapper to visualize the location of files in the AFS directory.
+Processes a tracking document to get files prior to passing to directory_vis.
+}
 \examples{
 \dontrun{
 

@@ -1,12 +1,11 @@
 ##' @include utils.R
 NULL
 
-##' @title file_info
-##' @details
 ##' Gather information about data files stored on afs.
-##' 
+##' @title file_info
 ##' @param path AFS path to root directory (defaults to Lixi's folder)
 ##' @param files Files to gather info about (get with process_tracker)
+##' @param fixed Match patterns exactly (surround with regexp anchors)
 ##' @return A data.table \itemize{
 ##'   \item size: size of file in kb
 ##'   \item modified: date last modified
@@ -45,6 +44,7 @@ file_info <- function(path=get_afs(), files, fixed=TRUE) {
   docs <- basename(short)
 
   ## Add file/directory names
+  lastmod <- filetype <- modified <- lastmod <- filename <- NULL
   finfo[, `:=`(directory = dirs, filename = docs)]
 
   ## Find time since modifications and file sizes

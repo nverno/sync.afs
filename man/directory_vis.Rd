@@ -16,7 +16,7 @@ directory_vis(finfo, add_root = TRUE, ...)
 \value{
 invisibly returns the graph.
 }
-\details{
+\description{
 Makes an igraph visualization of the file-directory structure.
 }
 

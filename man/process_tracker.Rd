@@ -12,8 +12,9 @@ process_tracker(tracker = file.path(get_afs(), "file_tracker.txt"))
 \value{
 list of two elements: filenames to track, and renamed files
 }
-\details{
-Process the file_tracker.txt document.  If files were renamd, replace with new names.
+\description{
+Process the file tracking document ('file_tracker.txt').
+If files were renamd, replaces with new names.
 Also, if filenames are duplicated, they are removed.
 }
 

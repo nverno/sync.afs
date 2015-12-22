@@ -6,4 +6,7 @@
 \usage{
 get_afs()
 }
+\description{
+Return the afs path for linux or on windows
+}
 
