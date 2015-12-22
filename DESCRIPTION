@@ -1,7 +1,8 @@
 Package: sync.afs
 Title: Sync with AFS
 Version: 0.0.0.9000
-Authors: Noah Peart
+Author: Noah Peart
+Maintainer: Noah Peart <noah.v.peart@gmail.com>
 Description: Attempt to keep up-to-date with data/documentation on AFS.
 Depends: 
     R (>= 3.2.2)

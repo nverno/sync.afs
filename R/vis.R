@@ -1,4 +1,5 @@
 ##' @include utils.R
+NULL
 
 ##' @title directory_vis
 ##' @details
@@ -11,21 +12,20 @@
 ##' @import igraph
 ##' @export
 directory_vis <- function(finfo, add_root=TRUE, ...) {
-    stopifnot(require(igraph))
-    edges <- data.frame(dirs = finfo$directory,
-                        docs = finfo$doc,
-                        weight = finfo$size,
-                        mod = finfo$lastmod, stringsAsFactors = FALSE)
+    es <- data.frame(dirs = finfo$directory,
+                     docs = finfo$rname,
+                     weight = finfo$size,
+                     mod = finfo$lastmod, stringsAsFactors = FALSE)
 
     ## Get an idea of the layout
-    g <- graph_from_data_frame(edges[, c("dirs", "docs", "weight")])
+    g <- igraph::graph_from_data_frame(es[, c("dirs", "docs", "weight")])
 
     if (add_root) {
         ## Add a root node 'Lixi' (all these are subdirectories presumably)
-        g <- g + vertex('Lixi') + edges(c(rbind('Lixi', unique(edges$dirs))))
+        g <- g + igraph::vertex('root') + igraph::edges(c(rbind('root', unique(es$dirs))))
     }
-    V(g)$name <- sub('\\..*', '', V(g)$name)
-    V(g)$color <- 'tan'
+    igraph::V(g)$name <- sub('\\..*', '', igraph::V(g)$name)
+    igraph::V(g)$color <- 'tan'
     plot(g, ...)
     invisible(g)
 }
@@ -37,6 +37,13 @@ directory_vis <- function(finfo, add_root=TRUE, ...) {
 ##' @param path Path to root AFS folder (has default)
 ##' @param add_root Logical to add root to graph
 ##' @param ... passed to plot.igraph
+##' @examples
+##' \dontrun{
+##'
+##'    ## Defaults to Lixi's root directory and tracked files.
+##'    data_vis()
+##'
+##' }
 ##' @export
 data_vis <- function(tracker=file.path(get_afs(), "file_tracker.txt"),
                      path=get_afs(), add_root=TRUE, ...) {

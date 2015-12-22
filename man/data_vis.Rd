@@ -16,4 +16,12 @@ data_vis(tracker = file.path(get_afs(), "file_tracker.txt"),
 
 \item{...}{passed to plot.igraph}
 }
+\examples{
+\dontrun{
+
+   ## Defaults to Lixi's root directory and tracked files.
+   data_vis()
+
+}
+}
 
