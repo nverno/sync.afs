@@ -10,7 +10,7 @@
 ##' @return data.table
 ##' @export
 create_data_key_template <- function(tracker=file.path(get_afs(), "file_tracker.txt")) {
-  dat <- sync.afs::process_tracker(tracker)
+  dat <- process_tracker(tracker)
 
   ## Get file info
   data_key <- file_info(files = c(

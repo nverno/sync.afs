@@ -56,7 +56,7 @@ file_info <- function(path=get_afs(), files) {
     ## Ordering
     ord <- c('rname', 'filename', 'modified', 'lastmod')
     data.table::setcolorder(finfo, c(ord, setdiff(names(finfo), ord)))
-    data.table::setkeyv(finfo, cols=c('lastmod', 'filetype'))
+    data.table::setkeyv(finfo, cols=c('filename'))
     finfo[]
 }
 
