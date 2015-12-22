@@ -4,7 +4,7 @@
 \alias{file_info}
 \title{file_info}
 \usage{
-file_info(path = get_afs(), files, fixed = TRUE)
+file_info(path = get_afs(), files, fixed = TRUE, rnames = NULL)
 }
 \arguments{
 \item{path}{AFS path to root directory (defaults to Lixi's folder)}
@@ -12,6 +12,8 @@ file_info(path = get_afs(), files, fixed = TRUE)
 \item{files}{Files to gather info about (get with process_tracker)}
 
 \item{fixed}{Match patterns exactly (surround with regexp anchors)}
+
+\item{rnames}{R data names to match to files (if NULL then new names are made)}
 }
 \value{
 A data.table \itemize{
@@ -24,6 +26,8 @@ A data.table \itemize{
 }
 }
 \description{
-Gather information about data files stored on afs.
+Gather information about data files stored on afs.  Throws error if
+there is no matching master file for R data.  This happens if 'rnames'
+is defined and the corresponding value in 'files' can't be located.
 }
 

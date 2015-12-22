@@ -31,14 +31,14 @@ test_that("Renaming sas files works", {
   file.copy(rename_fail, backup_file, overwrite = TRUE)  # backup test
   expect_error(update_key(path=file.path(get_afs(), testdir),
                           tracker=test_rename_fail,
-                          data_key=copy(dummy)))         # master file for 'b' not found
+                          data_key=dummy))               # master file for 'b' not found
   file.copy(backup_file, rename_fail, overwrite = TRUE)  # reset test
 
   ## Passing case: no missing master files
   file.copy(rename_pass, backup_file, overwrite = TRUE)  # backup test
   res <- update_key(path=file.path(get_afs(), testdir),
                     tracker=test_rename_pass,
-                    data_key=copy(dummy))
+                    data_key=dummy)
   file.copy(backup_file, rename_pass, overwrite = TRUE)  # reset test
 
   ## Passing tests
@@ -55,7 +55,7 @@ test_that('Adding new data to key works', {
   file.copy(add_pass, backup_file, overwrite = TRUE)  # backup test
   res <- update_key(path=file.path(get_afs(), testdir),
                     tracker=test_add,
-                    data_key=copy(dummy))
+                    data_key=dummy)
   file.copy(backup_file, add_pass, overwrite = TRUE)  # backup test
 
   ## Test that extra row is added

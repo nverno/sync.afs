@@ -1,6 +1,5 @@
 ##' Update data_key by processing the tracking document and renaming/adding
-##' files to data_key.  Throws error if there is an R data file associated with
-##' a master file that can't be found.
+##' files to data_key.  
 ##'
 ##' @title Update the data_key with new entries/name changes
 ##' @param path Path to base AFS directory from which to search (default to get_afs()).
@@ -12,34 +11,26 @@
 ##' @export
 update_key <- function(path=get_afs(), tracker="file_tracker.txt", data_key=data_key,
                        save_key=FALSE, src_path='~/work/sync.afs') {
+  dkey <- data.table::copy(data_key)
   tracker <- file.path(path, tracker)
   dat <- process_tracker(tracker)
   rname <- filename <- NULL
   
-  ## New files
-  new_files <- dat$files[(!(dat$files %in% data_key[['filename']]))]
-
   ## Renamed files
-  ## Just update 'filename', change 'rname' back after
+  ## Just update 'filename', 'rname' stays the same if defined
   if (length(dat$renamed)) {
     old_names <- unlist(lapply(dat$renamed, `[[`, 1), use.names=FALSE)
-    old_rnames <- data_key[old_names, rname]
     new_names <- unlist(lapply(dat$renamed, `[[`, 2), use.names=FALSE)
-    data_key[old_names, filename := new_names]
+    dkey[old_names, filename := new_names]
   }
+
+  ## New files
+  new_files <- dat$files[(!(dat$files %in% dkey[['filename']]))]
 
   ## Get file info -- including new files/renamed
-  files <- c(new_files, data_key$filename)
-  finfo <- file_info(files=files)
-
-  ## Rename 'rname'
-  if (length(dat$renamed)) {
-    missing_rnames <- old_rnames[!(new_names %in% finfo$filename)]
-    finfo[new_names, rname := old_rnames]
-    if (length(missing_rnames))
-      stop(sprintf('Couldn\'t find the master file for %s.',
-                   paste0(missing_rnames, collapse=', ')))
-  }
+  files <- c(dkey$filename, new_files)
+  rnames <- dkey[data.table(filename=files), rname, on='filename']
+  finfo <- file_info(files=files, rnames=rnames)
 
   ## Save
   if (save_key) {

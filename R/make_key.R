@@ -15,7 +15,9 @@ create_data_key_template <- function(path=get_afs(),
   dat <- process_tracker(tracker)
 
   ## Get file info
-  data_key <- file_info(path=path, files = c(dat$files, sapply(dat$renamed, `[[`, 2)))
+  data_key <- file_info(path=path,
+                        files=c(dat$files, unlist(lapply(dat$renamed, `[[`, 2),
+                          use.names=FALSE)), rnames=NA_character_)
   
   return( data_key[] )
 }

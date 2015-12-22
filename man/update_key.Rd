@@ -20,7 +20,6 @@ update_key(path = get_afs(), tracker = "file_tracker.txt",
 }
 \description{
 Update data_key by processing the tracking document and renaming/adding
-files to data_key.  Throws error if there is an R data file associated with
-a master file that can't be found.
+files to data_key.
 }
 
