@@ -4,7 +4,6 @@ NULL
 ##' Read master data associated with R data file.
 ##' @title Read master data file corresponding to a R data filename
 ##' @import haven
-##' @import dplyr
 ##' @import data.table
 ##' @param dname data name in R
 ##' @param data_key Key matching R data to master files.
