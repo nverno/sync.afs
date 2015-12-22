@@ -5,9 +5,9 @@ NULL
 ##' @title Read master data file corresponding to a R data filename
 ##' @importFrom haven read_sas
 ##' @import data.table
-##' @param dname data name in R
-##' @param data_key Key matching R data to master files.
+##' @param dkey data name in R
 ##' @param ... arguments to be passed to data reading function
+##' @param data_key Key matching R data to master files.
 ##' @examples
 ##' \dontrun{
 ##'   pp_raw <- get_data('pp_raw')

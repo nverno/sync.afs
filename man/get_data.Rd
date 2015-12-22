@@ -4,14 +4,14 @@
 \alias{get_data}
 \title{Read master data file corresponding to a R data filename}
 \usage{
-get_data(dname, data_key = data_key, ...)
+get_data(dname, dkey = data_key, ...)
 }
 \arguments{
-\item{dname}{data name in R}
-
-\item{data_key}{Key matching R data to master files.}
+\item{dkey}{data name in R}
 
 \item{...}{arguments to be passed to data reading function}
+
+\item{data_key}{Key matching R data to master files.}
 }
 \value{
 corresponding master file (prior to cleaning)
