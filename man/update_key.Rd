@@ -5,14 +5,14 @@
 \title{Update the data_key with new entries/name changes}
 \usage{
 update_key(path = get_afs(), tracker = "file_tracker.txt",
-  data_key = data_key, save_key = FALSE, src_path = "~/work/sync.afs")
+  data = data_key, save_key = FALSE, src_path = "~/work/sync.afs")
 }
 \arguments{
 \item{path}{Path to base AFS directory from which to search (default to get_afs()).}
 
 \item{tracker}{Name of the text file containing filenames to track (default to 'file_tracker.txt').}
 
-\item{data_key}{The current data_key to update (default to data/data_key.rda).}
+\item{data}{The current data key to update (default to data/data_key.rda).}
 
 \item{save_key}{Save the key in the data directory?  Use this if going to push update.}
 

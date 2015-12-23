@@ -5,7 +5,8 @@ NULL
 ##' @title Read master data file corresponding to a R data filename
 ##' @importFrom haven read_sas
 ##' @import data.table
-##' @param dkey data name in R
+##' @param dname data name in R
+##' @param dkey data key to match R data files to master files (default data_key)
 ##' @param ... arguments to be passed to data reading function
 ##' @param data_key Key matching R data to master files.
 ##' @examples

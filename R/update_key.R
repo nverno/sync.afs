@@ -4,14 +4,14 @@
 ##' @title Update the data_key with new entries/name changes
 ##' @param path Path to base AFS directory from which to search (default to get_afs()).
 ##' @param tracker Name of the text file containing filenames to track (default to 'file_tracker.txt').
-##' @param data_key The current data_key to update (default to data/data_key.rda).
+##' @param data The current data key to update (default to data/data_key.rda).
 ##' @param save_key Save the key in the data directory?  Use this if going to push update.
 ##' @param src_path Path to package source, only used if save_key is TRUE.
 ##' @import data.table
 ##' @export
-update_key <- function(path=get_afs(), tracker="file_tracker.txt", data_key=data_key,
+update_key <- function(path=get_afs(), tracker="file_tracker.txt", data=data_key,
                        save_key=FALSE, src_path='~/work/sync.afs') {
-  dkey <- data.table::copy(data_key)
+  dkey <- data.table::copy(data)
   tracker <- file.path(path, tracker)
   dat <- process_tracker(tracker)
   rname <- filename <- NULL
