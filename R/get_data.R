@@ -30,6 +30,6 @@ get_data <- function(dname, dkey=data_key, ...) {
                  'txt' = read.table,
                  read.table)
   path <- file.path(get_afs(), dkey[rname == dname, afs_path])
-  read(path, ...)
+  setDT(read(path, ...))[]
 }
 

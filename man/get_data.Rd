@@ -7,7 +7,9 @@
 get_data(dname, dkey = data_key, ...)
 }
 \arguments{
-\item{dkey}{data name in R}
+\item{dname}{data name in R}
+
+\item{dkey}{data key to match R data files to master files (default data_key)}
 
 \item{...}{arguments to be passed to data reading function}
 
