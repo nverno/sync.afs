@@ -5,6 +5,7 @@ NULL
 ##' @title Read master data file corresponding to a R data filename
 ##' @importFrom haven read_sas
 ##' @import data.table
+##' @import readxl
 ##' @param dname data name in R
 ##' @param dkey data key to match R data files to master files (default data_key)
 ##' @param ... arguments to be passed to data reading function
@@ -28,8 +29,11 @@ get_data <- function(dname, dkey=data_key, ...) {
                  'sas7bdat' = haven::read_sas,
                  'csv' = read.csv,
                  'txt' = read.table,
+                 'xls' =,
+                 'xlsx' = readxl::read_excel,
                  read.table)
   path <- file.path(get_afs(), dkey[rname == dname, afs_path])
   setDT(read(path, ...))[]
 }
+
 
