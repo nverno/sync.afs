@@ -1,11 +1,11 @@
 context("data_key")
 library(data.table)
 
-check_afs <- function() {
+## Dummy check for tests
+simple_afs_check <- function() {
   if (!file.exists(get_afs()))
     skip('AFS directory not reachable.')
 }
-
 
 ## Some file names for testing
 testdir <- 'tracking_test'
@@ -16,14 +16,14 @@ test_add <- 'test_add.txt'
 backup <- 'backup.txt'
 
 test_that("Creating key works/throws warings", {
-  check_afs()
+  simple_afs_check()
   tracker <- file.path(get_afs(), testdir, test_tracker)
   expect_warning(dummy <<- create_data_key_template(tracker=tracker))  # want this later
   expect_equal(nrow(dummy), 12)
 })
 
 test_that("Renaming sas files works", {
-  check_afs()
+  simple_afs_check()
   rename_fail <- file.path(get_afs(), testdir, test_rename_fail)
   rename_pass <- file.path(get_afs(), testdir, test_rename_pass)
   backup_file <- file.path(get_afs(), testdir, backup)
@@ -48,7 +48,7 @@ test_that("Renaming sas files works", {
 })
 
 test_that('Adding new data to key works', {
-  check_afs()
+  simple_afs_check()
   add_pass <- file.path(get_afs(), testdir, test_add)
   backup_file <- file.path(get_afs(), testdir, backup)
   
