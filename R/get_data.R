@@ -33,7 +33,7 @@ get_data <- function(dname, dkey=data_key, ...) {
                  'xlsx' = readxl::read_excel,
                  read.table)
   path <- file.path(get_afs(), dkey[rname == dname, afs_path])
-  setDT(read(path, ...))[]
+  data.table::setDT(read(path, ...))[]
 }
 
 
