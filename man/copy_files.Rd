@@ -4,12 +4,17 @@
 \alias{copy_files}
 \title{Copy files from AFS}
 \usage{
-copy_files(ext, outdir = "temp", ...)
+copy_files(ext, outdir = "temp", dkey = sync.afs::data_key,
+  path = get_afs(), ...)
 }
 \arguments{
 \item{ext}{File extensions (character vector)}
 
 \item{outdir}{Name of directory to copy files to}
+
+\item{dkey}{Data key}
+
+\item{path}{Path to root AFS node.}
 
 \item{...}{Passed to \code{file.copy}}
 }
