@@ -16,7 +16,7 @@ NULL
 ##' }
 ##' @return corresponding master file (prior to cleaning)
 ##' @export
-get_data <- function(dname, dkey=data_key, ...) {
+get_data <- function(dname, dkey=sync.afs::data_key, ...) {
   if (!exists("dkey"))
     stop('data_key isn\'t made, use the create_data_key_template() function.')
   if (!(dname %in% dkey[['rname']]))

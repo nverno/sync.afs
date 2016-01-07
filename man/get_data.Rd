@@ -4,7 +4,7 @@
 \alias{get_data}
 \title{Read master data file corresponding to a R data filename}
 \usage{
-get_data(dname, dkey = data_key, ...)
+get_data(dname, dkey = sync.afs::data_key, ...)
 }
 \arguments{
 \item{dname}{data name in R}
