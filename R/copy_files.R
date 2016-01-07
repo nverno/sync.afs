@@ -4,7 +4,8 @@
 ##' @param outdir Name of directory to copy files to
 ##' @param ... Passed to \code{file.copy}
 ##' @return TRUE if all files copied successfully.
-copy_data <- function(ext, outdir='temp', ...) {
+##' @export
+copy_files <- function(ext, outdir='temp', ...) {
     check_afs()
     filetype <- afs_path <- data_key <- NULL
     filepaths <- data_key[filetype %in% ext, afs_path]
