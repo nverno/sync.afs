@@ -4,7 +4,7 @@
 \alias{create_data_key_template}
 \title{Initialize/recreate data_key from scratch (resets R data names to default).}
 \usage{
-create_data_key_template(path = get_afs(), tracker = file.path(get_afs(),
+create_data_key_template(path = get_afs(), tracker = file.path(path,
   "file_tracker.txt"))
 }
 \arguments{

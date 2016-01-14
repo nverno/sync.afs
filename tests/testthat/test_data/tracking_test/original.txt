@@ -1,0 +1,24 @@
+################################################################################
+##
+##                          List of files to track
+##
+################################################################################
+## First test: should create key/locations (12 total - one not found)
+## Second test: rename sas file referred to by R database
+## Third test: add new file to key
+"xyz.sas7bdat"                          # should find
+"a.sas7bdat"
+"b.sas7bdat"
+"c.sas7bdat"
+"d.sas7bdat"
+
+"xxx.csv"                               # should throw warning (doesn't exist)
+"Transect Data History 1987-2011.docx"  # should find
+
+## Find all these as well
+"e.sas7bdat"
+"f.sas7bdat"
+"g.sas7bdat"
+"h.sas7bdat"
+"i.sas7bdat"
+"j.sas7bdat"

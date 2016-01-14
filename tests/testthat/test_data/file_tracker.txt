@@ -3,8 +3,6 @@
 ##                          List of files to track
 ##
 ################################################################################
-## Would you mind just adding new data/documentation to this file,
-## so I can track it?
 ## Notes:
 ## - All of the files are assumed to be in `lixi kong` folder on AFS
 ##   (if this isn't the case, can you let me know?)
@@ -49,6 +47,7 @@
 "trseedmas11.sas7bdat"
 "trspcovmas11.sas7bdat"
 "trsubmas11c.sas7bdat"
+"PP_DEMSLOPE.csv"
 
 ################################################################################
 ##
@@ -65,3 +64,16 @@
 "Segment Data History 1988-2012.docx"
 "Soil Data History 86~11.docx"
 "Transect Data History 1987-2011.docx"
+
+################################################################################
+##
+##                            Testing files
+##
+################################################################################
+## Don't modify these:
+## Just used to run tests to check stuff
+##' @testDir tracking_test
+##' @test rename
+##' trsaptrmas11bv.sas7bdat -> tst.sas7dbat
+##' @expect tst.sas7dbat %in% list.files(testDir, full.names=FALSE, recursive=FALSE)
+

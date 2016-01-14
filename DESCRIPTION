@@ -28,4 +28,5 @@ Collate:
     'vis.R'
 Suggests: 
     testthat,
-    dplyr
+    dplyr,
+    rio

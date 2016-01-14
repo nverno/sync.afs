@@ -4,10 +4,12 @@
 \alias{get_data}
 \title{Read master data file corresponding to a R data filename}
 \usage{
-get_data(dname, dkey = sync.afs::data_key, ...)
+get_data(dname, path = get_afs(), dkey = sync.afs::data_key, ...)
 }
 \arguments{
 \item{dname}{data name in R}
+
+\item{path}{Path to root AFS directory}
 
 \item{dkey}{data key to match R data files to master files (default data_key)}
 
@@ -16,7 +18,7 @@ get_data(dname, dkey = sync.afs::data_key, ...)
 \item{data_key}{Key matching R data to master files.}
 }
 \value{
-corresponding master file (prior to cleaning)
+data.table
 }
 \description{
 Read master data associated with R data file.

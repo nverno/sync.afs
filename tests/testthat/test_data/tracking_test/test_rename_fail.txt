@@ -1,0 +1,13 @@
+################################################################################
+##
+##                     Failing Case: rdata cant find master file
+##
+################################################################################
+## 'bb.sas7bdat' doesn't exist: throws error
+
+"xyz.sas7bdat" -> "zyx.sas7bdat"        # should rename/rewrite
+"a.sas7bdat" -> "aa.sas7bdat"           # should rename and find
+"b.sas7bdat" -> "bb.sas7bdat"           # should rename and not find (remove with error?)
+
+"xxx.csv"                               # should throw warning (doesn't exist)
+"Transect Data History 1987-2011.docx"  # should find - but not update unless changed

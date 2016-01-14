@@ -5,7 +5,7 @@
 \title{Update the data_key with new entries/name changes}
 \usage{
 update_key(path = get_afs(), tracker = "file_tracker.txt",
-  data = data_key, save_key = FALSE, src_path = "~/work/sync.afs")
+  data = data_key, save_key = FALSE, outfile = NULL)
 }
 \arguments{
 \item{path}{Path to base AFS directory from which to search (default to get_afs()).}
@@ -16,7 +16,7 @@ update_key(path = get_afs(), tracker = "file_tracker.txt",
 
 \item{save_key}{Save the key in the data directory?  Use this if going to push update.}
 
-\item{src_path}{Path to package source, only used if save_key is TRUE.}
+\item{outfile}{Where to save key, only used if save_key is TRUE.}
 }
 \description{
 Update data_key by processing the tracking document and renaming/adding

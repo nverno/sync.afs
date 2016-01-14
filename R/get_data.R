@@ -7,6 +7,7 @@ NULL
 ##' @import data.table
 ##' @import readxl
 ##' @param dname data name in R
+##' @param path Path to root AFS directory
 ##' @param dkey data key to match R data files to master files (default data_key)
 ##' @param ... arguments to be passed to data reading function
 ##' @param data_key Key matching R data to master files.
@@ -14,26 +15,32 @@ NULL
 ##' \dontrun{
 ##'   pp_raw <- get_data('pp_raw')
 ##' }
-##' @return corresponding master file (prior to cleaning)
+##' @return data.table
 ##' @export
-get_data <- function(dname, dkey=sync.afs::data_key, ...) {
+get_data <- function(dname, path=get_afs(), dkey=sync.afs::data_key, ...) {
   if (!exists("dkey"))
     stop('data_key isn\'t made, use the create_data_key_template() function.')
   if (!(dname %in% dkey[['rname']]))
     stop('That data is not named in the key.')
   rname <- filetype <- afs_path <- NULL
-  
-  ## choose how to read
-  ftype = dkey[rname == dname, filetype]
-  read <- switch(ftype,
-                 'sas7bdat' = haven::read_sas,
-                 'csv' = read.csv,
-                 'txt' = read.table,
-                 'xls' =,
-                 'xlsx' = readxl::read_excel,
-                 read.table)
-  path <- file.path(get_afs(), dkey[rname == dname, afs_path])
-  data.table::setDT(read(path, ...))[]
+  m <- match.call(expand.dots=TRUE)[-1L]
+
+  path <- file.path(path, dkey[rname == dname, afs_path])
+  res <- if (requireNamespace('rio', quietly=TRUE)) {
+    column.labels <- if ('column.labels' %in% names(m)) m[['column.labels']] else TRUE
+    rio::import(path, column.labels=column.labels, ...)
+  } else {
+    ## choose how to read
+    ftype = dkey[rname == dname, filetype]
+    read <- switch(ftype,
+                   'sas7bdat' = haven::read_sas,
+                   'csv' = read.csv,
+                   'txt' = read.table,
+                   'xls' = ,
+                     'xlsx' = readxl::read_excel,
+                   fread)
+    res <- read(path, ...)
+    ## Use rio instead
+  }
+  data.table::setDT(res)[]
 }
-
-

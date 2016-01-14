@@ -1,0 +1,17 @@
+################################################################################
+##
+
+##                          Passing Case with renaming
+
+##
+################################################################################
+
+
+"xyz.sas7bdat" -> "zyx.sas7bdat"        # should rename/rewrite
+
+"a.sas7bdat" -> "aa.sas7bdat"           # should rename and find
+
+
+"xxx.csv"                               # should throw warning (doesn't exist)
+
+"Transect Data History 1987-2011.docx"  # should find - but not update unless changed
