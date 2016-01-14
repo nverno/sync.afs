@@ -27,8 +27,10 @@ get_data <- function(dname, path=get_afs(), dkey=sync.afs::data_key, ...) {
 
   path <- file.path(path, dkey[rname == dname, afs_path])
   res <- if (requireNamespace('rio', quietly=TRUE)) {
-    column.labels <- if ('column.labels' %in% names(m)) m[['column.labels']] else TRUE
-    rio::import(path, column.labels=column.labels, ...)
+    if (rio:::get_ext(path) == 'sas7bdat') {
+        column.labels <- if ('column.labels' %in% names(m)) m[['column.labels']] else TRUE
+        rio::import(path, column.labels=column.labels, ...)
+    } else rio::import(path, ...)
   } else {
     ## choose how to read
     ftype = dkey[rname == dname, filetype]
