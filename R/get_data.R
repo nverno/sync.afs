@@ -2,15 +2,19 @@
 NULL
 
 ##' load the data key onload
+##' work around saving persitent data
 ##' @keywords internal
 load_key <- function(data=getOption('afs.key')) {
-  p <- file.path(system.file('extdata', package='sync.afs'), data)
+  p <- file.path(system.file('extdata', package='sync.afs'), paste0(data, '.rda'))
   load(p, envir=getNamespace('sync.afs'))
 }
 
 ##' Get the data key
+##' @param key key name (getOption('afs.key'))
 ##' @export
-get_key <- function() { getFromNamespace('data_key', 'sync.afs') }
+get_key <- function(key=getOption('afs.key')) { 
+  getFromNamespace(key, 'sync.afs') 
+}
 
 ##' Read master data associated with R data file.
 ##'

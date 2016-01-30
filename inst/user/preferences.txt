@@ -2,4 +2,4 @@
 cell: northstar.dartmouth.edu
 tracker: //afs/northstar.dartmouth.edu/users/d/drp/MOOSHUBB/longterm/lixi kong/file_tracker.txt
 userdir: users/d/drp/MOOSHUBB/longterm/lixi kong
-key: data_key.rda
+key: data_key

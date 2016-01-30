@@ -10,6 +10,7 @@ path <- if (test_afs && simple_afs_check()) afs$path else 'test_data/'
 
 ## Some file names for testing
 testdir <- 'tracking_test'
+path <- file.path(path, testdir)
 test_tracker <- 'original.txt'
 test_rename_fail <- 'test_rename_fail.txt'
 test_rename_pass <- 'test_rename_pass.txt'
@@ -17,17 +18,17 @@ test_add <- 'test_add.txt'
 backup <- 'backup.txt'
 
 test_that("Creating key works/throws warnings", {
-    tracker <- file.path(path, testdir, test_tracker)
-
+    tracker <- file.path(path, test_tracker)
+    
     ## save this for next tests
-    expect_warning(dummy <<- create_data_key_template(tracker=tracker))
+    expect_warning(dummy <<- create_data_key_template(path=path, tracker=tracker))
     expect_equal(nrow(dummy), 12)
 })
 
 test_that("Renaming sas files works", {
-    rename_fail <- file.path(path, testdir, test_rename_fail)
-    rename_pass <- file.path(path, testdir, test_rename_pass)
-    backup_file <- file.path(path, testdir, backup)
+    rename_fail <- file.path(path, test_rename_fail)
+    rename_pass <- file.path(path, test_rename_pass)
+    backup_file <- file.path(path, backup)
 
     ## Error when rdata has no master file
     file.copy(from=rename_fail, to=backup_file, overwrite = TRUE)  # backup test
@@ -46,8 +47,8 @@ test_that("Renaming sas files works", {
 })
 
 test_that('Adding new data to key works', {
-    add_pass <- file.path(path, testdir, test_add)
-    backup_file <- file.path(path, testdir, backup)
+    add_pass <- file.path(path, test_add)
+    backup_file <- file.path(path, backup)
     
     ## Add data
     file.copy(add_pass, backup_file, overwrite = TRUE)  # backup test

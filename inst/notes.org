@@ -1,0 +1,4 @@
+
+* TODO [50%]
+  - [X] Failing renaming Rfiles incorrectly when updating key.
+  - [ ] file_info doesn't need to recursively search unless it has to

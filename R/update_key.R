@@ -13,6 +13,7 @@ update_key <- function(path=getOption('afs.path'),
                        save_key=TRUE, outfile=NULL) {
   dkey <- data.table::copy(data)
   dat <- process_tracker(tracker=tracker)
+  dat$files <- tolower(dat$files)
   rname <- filename <- NULL
   
   ## Renamed files
@@ -20,7 +21,7 @@ update_key <- function(path=getOption('afs.path'),
   if (length(dat$renamed)) {
     old_names <- unlist(lapply(dat$renamed, `[[`, 1), use.names=FALSE)
     new_names <- unlist(lapply(dat$renamed, `[[`, 2), use.names=FALSE)
-    dkey[old_names, filename := new_names]
+    dkey[filename %in% old_names, filename := tolower(new_names)]
   }
 
   ## New files
@@ -42,3 +43,16 @@ update_key <- function(path=getOption('afs.path'),
   invisible(finfo[])
 }
 
+##' Update R file names associated with master files.
+##' 
+##' @param rnames New R data names
+##' @param filenames Corresponding master file names.
+##' @param key Data key to update (getOption('afs.key))
+##' @export
+set_key_names <- function(rnames, filenames, key=getOption('afs.key')) {
+  dkey <- get_key()
+  dkey[list(filename = filenames), rname := rnames, on='filename']
+  p <- file.path(system.file('extdata', package='sync.afs'), getOption('afs.key'))
+  data_key <- dkey
+  save(data_key, file=p)
+}
