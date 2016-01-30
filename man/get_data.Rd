@@ -2,9 +2,9 @@
 % Please edit documentation in R/get_data.R
 \name{get_data}
 \alias{get_data}
-\title{Read master data file corresponding to a R data filename}
+\title{Read master data associated with R data file.}
 \usage{
-get_data(dname, path = get_afs(), dkey = sync.afs::data_key, ...)
+get_data(dname, path = getOption("afs.path"), dkey = get_key(), ...)
 }
 \arguments{
 \item{dname}{data name in R}

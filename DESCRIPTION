@@ -20,7 +20,6 @@ Collate:
     'sign_in.R'
     'afs.R'
     'copy_files.R'
-    'data.R'
     'utils.R'
     'file_info.R'
     'get_data.R'

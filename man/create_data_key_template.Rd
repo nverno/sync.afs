@@ -2,15 +2,15 @@
 % Please edit documentation in R/make_key.R
 \name{create_data_key_template}
 \alias{create_data_key_template}
-\title{Initialize/recreate data_key from scratch (resets R data names to default).}
+\title{Create data_key (as data.table) to store files/locations/info for quicker access}
 \usage{
-create_data_key_template(path = get_afs(), tracker = file.path(path,
-  "file_tracker.txt"))
+create_data_key_template(path = getOption("afs.path"),
+  tracker = getOption("afs.tracker"))
 }
 \arguments{
-\item{path}{Path to root directory from which to search.}
+\item{path}{Path to root directory.}
 
-\item{tracker}{Path to data tracking file.}
+\item{tracker}{Path to data tracking file (default getOption('afs.tracker'))}
 }
 \value{
 data.table

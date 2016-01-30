@@ -2,10 +2,11 @@ context("data_key")
 library(data.table)
 
 ## Dummy check for tests
-simple_afs_check <- function() file.exists(get_afs())
-test_afs <- FALSE
-if (Sys.info()['sysname'] == 'Windows') test_afs <- FALSE  # path length problems
-path <- if (test_afs && simple_afs_check()) get_afs() else 'test_data/'
+afs <- AFS$new()
+simple_afs_check <- function() afs$connected() && file.exists(afs$path)
+test_afs <- TRUE
+## if (Sys.info()['sysname'] == 'Windows') test_afs <- FALSE  # path length problems
+path <- if (test_afs && simple_afs_check()) afs$path else 'test_data/'
 
 ## Some file names for testing
 testdir <- 'tracking_test'
@@ -17,8 +18,9 @@ backup <- 'backup.txt'
 
 test_that("Creating key works/throws warnings", {
     tracker <- file.path(path, testdir, test_tracker)
-    expect_warning(dummy <<- create_data_key_template(path=path,
-                                                      tracker=tracker))  # want this later
+
+    ## save this for next tests
+    expect_warning(dummy <<- create_data_key_template(tracker=tracker))
     expect_equal(nrow(dummy), 12)
 })
 
@@ -29,16 +31,13 @@ test_that("Renaming sas files works", {
 
     ## Error when rdata has no master file
     file.copy(from=rename_fail, to=backup_file, overwrite = TRUE)  # backup test
-    expect_error(update_key(path=file.path(path, testdir),
-                            tracker=test_rename_fail,
-                            data=dummy))               # master file for 'b' not found
+    expect_error(update_key(path=path, tracker=rename_fail,
+                            data=dummy, save_key=FALSE))           # master file for 'b' not found
     file.copy(from=backup_file, to=rename_fail, overwrite = TRUE)  # reset test
 
     ## Passing case: no missing master files
     file.copy(rename_pass, backup_file, overwrite = TRUE)  # backup test
-    res <- update_key(path=file.path(path, testdir),
-                      tracker=test_rename_pass,
-                      data=dummy)
+    res <- update_key(path=path, tracker=rename_pass, data=dummy, save_key=FALSE)
     file.copy(backup_file, rename_pass, overwrite = TRUE)  # reset test
 
     ## Passing tests
@@ -52,9 +51,7 @@ test_that('Adding new data to key works', {
     
     ## Add data
     file.copy(add_pass, backup_file, overwrite = TRUE)  # backup test
-    res <- update_key(path=file.path(path, testdir),
-                      tracker=test_add,
-                      data=dummy)
+    res <- update_key(path=path, tracker=add_pass, data=dummy, save_key=FALSE)
     file.copy(backup_file, add_pass, overwrite = TRUE)  # backup test
 
     ## Test that extra row is added

@@ -2,12 +2,15 @@
 % Please edit documentation in R/file_info.R
 \name{file_info}
 \alias{file_info}
-\title{file_info}
+\title{Gather information about data files stored on afs.  Throws error if
+there is no matching master file for R data.  This happens if 'rnames'
+is defined and the corresponding value in 'files' can't be located.}
 \usage{
-file_info(path = get_afs(), files, fixed = TRUE, rnames = NULL)
+file_info(path = getOption("afs.path"), files, fixed = TRUE,
+  rnames = NULL)
 }
 \arguments{
-\item{path}{AFS path to root directory (defaults to Lixi's folder)}
+\item{path}{Path to root directory to search for files.}
 
 \item{files}{Files to gather info about (get with process_tracker)}
 

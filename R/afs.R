@@ -17,14 +17,14 @@ AFS <- R6::R6Class(
   'AFS',
   public = list(
     ## AFS paths
-    root = '//afs',  # root AFS path
-    cell = NA,       # cell
-    base = NA,       # user base directory 
-    path = NA,       # full path to base directory
+    root = '//afs',     # root AFS path
+    cell = NA,          # cell
+    userdir = NA,       # user base directory 
+    path = NA,          # full path to base directory
     
     ## When initializing, just check for sysutils and current tokens
     ## if the utils are available
-    initialize = function(cell, base) {
+    initialize = function(cell, userdir) {
       private$has_utils <- private$utils()
       if (!private$has_utils)
         stop("Can't connect to AFS without system utilities.")
@@ -37,13 +37,13 @@ AFS <- R6::R6Class(
       } else if (!is.null((opt <- getOption('afs.cell')))) {
         self$cell <- opt
       }
-      if (!missing(base)) {
-        self$base <- base
-      } else if (!is.null((opt <- getOption('afs.path')))) {
-        self$base <- opt
+      if (!missing(userdir)) {
+        self$userdir <- userdir
+      } else if (!is.null((opt <- getOption('afs.userdir')))) {
+        self$userdir <- opt
       }
-      if (!is.na(self$root) && !is.na(self$cell) && !is.na(self$base))
-        self$path <- file.path(self$root, self$cell, self$base)
+      if (!is.na(self$root) && !is.na(self$cell) && !is.na(self$userdir))
+        self$path <- file.path(self$root, self$cell, self$userdir)
     },
 
     ## Check to see if there are valid tokens in the cache.

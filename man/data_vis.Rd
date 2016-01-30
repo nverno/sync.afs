@@ -5,18 +5,17 @@
 \title{Wrapper to visualize the location of files in the AFS directory.
 Processes a tracking document to get files prior to passing to directory_vis.}
 \usage{
-data_vis(afs, tracker = getOption("afs.tracker"), add_root = TRUE, ...)
+data_vis(path = getOption("afs.path"), tracker = getOption("afs.tracker"),
+  add_root = TRUE, ...)
 }
 \arguments{
-\item{afs}{An AFS object with path set to user root}
+\item{path}{Path to AFS root folder (getOption('afs.path'))}
 
-\item{tracker}{Path to tracker file (default getOption('afs.tracker'))}
+\item{tracker}{Path to tracker file (getOption('afs.tracker'))}
 
 \item{add_root}{Logical to add root to graph}
 
 \item{...}{passed to plot.igraph}
-
-\item{path}{Path to root AFS folder (has default)}
 }
 \value{
 Returns the igraph invisibly.
@@ -28,7 +27,7 @@ Processes a tracking document to get files prior to passing to directory_vis.
 \examples{
 \dontrun{
 
-   ## Defaults to Lixi's root directory and tracked files.
+   ## Defaults to root directory and shows tracked files.
    data_vis()
 
 }

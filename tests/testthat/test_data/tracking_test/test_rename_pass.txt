@@ -14,4 +14,4 @@
 
 "xxx.csv"                               # should throw warning (doesn't exist)
 
-"Transect Data History 1987-2011.docx"  # should find - but not update unless changed
+"Transect Data History2 1987-2011.docx"  # should find - but not update unless changed

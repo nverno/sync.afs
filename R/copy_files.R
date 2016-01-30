@@ -7,7 +7,7 @@
 ##' @param ... Passed to \code{file.copy}
 ##' @return TRUE if all files copied successfully.
 ##' @export
-copy_files <- function(ext, afs, outdir='temp', dkey=sync.afs::data_key, ...) {
+copy_files <- function(ext, afs, outdir='temp', dkey=get_key(), ...) {
     if (!afs$connected()) afs$signin()
     if (is.null(afs$path)) stop('AFS path is not defined.')
     filetype <- afs_path <- NULL

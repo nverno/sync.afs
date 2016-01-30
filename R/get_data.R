@@ -1,8 +1,19 @@
 ##' @include utils.R
 NULL
 
+##' load the data key onload
+##' @keywords internal
+load_key <- function(data=getOption('afs.key')) {
+  p <- file.path(system.file('extdata', package='sync.afs'), data)
+  load(p, envir=getNamespace('sync.afs'))
+}
+
+##' Get the data key
+##' @export
+get_key <- function() { getFromNamespace('data_key', 'sync.afs') }
+
 ##' Read master data associated with R data file.
-##' @title Read master data file corresponding to a R data filename
+##'
 ##' @importFrom haven read_sas
 ##' @import data.table
 ##' @importFrom readxl read_excel
@@ -17,7 +28,8 @@ NULL
 ##' }
 ##' @return data.table
 ##' @export
-get_data <- function(dname, path=get_afs(), dkey=sync.afs::data_key, ...) {
+get_data <- function(dname, path=getOption('afs.path'), 
+                     dkey=get_key(), ...) {
   if (!exists("dkey"))
     stop('data_key isn\'t made, use the create_data_key_template() function.')
   if (!(dname %in% dkey[['rname']]))

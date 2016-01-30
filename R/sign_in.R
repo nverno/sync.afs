@@ -13,11 +13,9 @@ signin <- function(user, pwd, cell, ...) {
       while(TRUE) {
         user <- readline("Enter username:")
         pwd <- readline("Enter password:")
-        ncell <- readline(sprintf("Cell: (return to use default: %s)",
-          cell))
-        if (!nzchar(ncell)) cell <- ncell
-        dots <- readline("Other commands to pass to klog (hit return to skip):")
-        res <- private$submit(user, pwd, cell, dots)
+        cat(sprintf('\n Logging in to cell %s', getOption('afs.cell')))
+        ## dots <- readline("Other commands to pass to klog (hit return to skip):")
+        res <- private$submit(user, pwd, cell, ...)
         if (!res) {
           cat(sprintf('\n%s', as.vector(private$error)))
           cat("\nTrying again (Ctrl-C Ctrl-C to EXIT).\n")

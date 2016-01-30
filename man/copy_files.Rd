@@ -4,7 +4,7 @@
 \alias{copy_files}
 \title{Copy files from AFS}
 \usage{
-copy_files(ext, afs, outdir = "temp", dkey = sync.afs::data_key, ...)
+copy_files(ext, afs, outdir = "temp", dkey = get_key(), ...)
 }
 \arguments{
 \item{ext}{File extensions (character vector)}

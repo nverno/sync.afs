@@ -4,14 +4,16 @@
 \alias{afs_set_opts}
 \title{Set user preferences}
 \usage{
-afs_set_opts(path = NULL, tracker = NULL, cell = NULL)
+afs_set_opts(cell, tracker, userdir, key)
 }
 \arguments{
-\item{path}{Path to default AFS directory}
+\item{cell}{AFS cell}
 
 \item{tracker}{Path to tracking file}
 
-\item{cell}{AFS cell}
+\item{userdir}{Path to users directory on AFS (after the cell)}
+
+\item{key}{Data key (default to 'data_key.rda' in 'extdata')}
 }
 \description{
 Set user preferences.  To make persistent, stored in inst/user

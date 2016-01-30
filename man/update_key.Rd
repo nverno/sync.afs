@@ -2,19 +2,20 @@
 % Please edit documentation in R/update_key.R
 \name{update_key}
 \alias{update_key}
-\title{Update the data_key with new entries/name changes}
+\title{Update data_key by processing the tracking document and renaming/adding
+files to data_key.}
 \usage{
-update_key(path = get_afs(), tracker = "file_tracker.txt",
-  data = data_key, save_key = FALSE, outfile = NULL)
+update_key(path = getOption("afs.path"), tracker = getOption("afs.tracker"),
+  data = get_key(), save_key = TRUE, outfile = NULL)
 }
 \arguments{
-\item{path}{Path to base AFS directory from which to search (default to get_afs()).}
+\item{path}{Path to AFS root directory (getOption('afs.path))}
 
-\item{tracker}{Name of the text file containing filenames to track (default to 'file_tracker.txt').}
+\item{tracker}{tracking file (getOption('afs.tracker'))}
 
-\item{data}{The current data key to update (default to data/data_key.rda).}
+\item{data}{Data key (getOption('afs.key')}
 
-\item{save_key}{Save the key in the data directory?  Use this if going to push update.}
+\item{save_key}{Save the returned key (default to "pkg/extdata/data_key.rda")}
 
 \item{outfile}{Where to save key, only used if save_key is TRUE.}
 }

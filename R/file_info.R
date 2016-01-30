@@ -5,8 +5,7 @@ NULL
 ##' there is no matching master file for R data.  This happens if 'rnames'
 ##' is defined and the corresponding value in 'files' can't be located.
 ##'
-##' @title file_info
-##' @param path AFS path to root directory (defaults to Lixi's folder)
+##' @param path Path to root directory to search for files.
 ##' @param files Files to gather info about (get with process_tracker)
 ##' @param fixed Match patterns exactly (surround with regexp anchors)
 ##' @param rnames R data names to match to files (if NULL then new names are made)
@@ -19,17 +18,22 @@ NULL
 ##'   \item filetype: file extension
 ##'}
 ##' @importFrom tools file_path_sans_ext
-##' @import data.table
 ##' @export
-file_info <- function(path=get_afs(), files, fixed=TRUE, rnames=NULL) {
+file_info <- function(path=getOption('afs.path'), files, fixed=TRUE, rnames=NULL) {
+  files <- tolower(files)
   patts <- if (fixed) paste0('^', files, '$') else files
   if (is.null(rnames)) rnames <- NA_character_
   if (!is.character(rnames)) stop("'rnames' should be character type.")
   
   ## Get full file paths
   paths <- lapply(patts, function(i)
-    list.files(path=path, pattern=i, full.names=TRUE, recursive = TRUE))
-
+    list.files(path=path, pattern=i, full.names=TRUE, recursive = TRUE, 
+      ignore.case = TRUE))
+  
+  ## Can't handle multiple matching files
+  if ((inds <- any(lengths(paths) > 2L))) 
+    stop(sprintf("Multiple matches for %s", paths[inds]))
+  
   ## Error or warning for missing files
   missed <- which(!lengths(paths))
   if (length(missed)) {
@@ -58,7 +62,7 @@ file_info <- function(path=get_afs(), files, fixed=TRUE, rnames=NULL) {
   ## Drop the afs prefix
   short <- sub(paste0(path, "/"), '', paths, fixed=TRUE)
   dirs <- dirname(short)
-  docs <- basename(short)
+  docs <- tolower(basename(short))
 
   ## Add file/directory names
   lastmod <- filetype <- modified <- lastmod <- filename <- rname <-
@@ -70,8 +74,9 @@ file_info <- function(path=get_afs(), files, fixed=TRUE, rnames=NULL) {
   finfo[, filetype := tools::file_ext(short)]
 
   ## Add rnames: only create new ones where NA_character_
+  ## new_names <- tolower(tools::file_path_sans_ext(files))
   finfo[data.table(filename=files, rname=rnames), rname := rname,
-        on='filename', nomatch=0L]
+    on='filename', nomatch=0L]
   finfo[is.na(rname), rname := tolower(tools::file_path_sans_ext(filename))]
   
   ## Add AFS path from root
