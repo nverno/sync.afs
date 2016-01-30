@@ -5,7 +5,7 @@ NULL
 ##' @title Read master data file corresponding to a R data filename
 ##' @importFrom haven read_sas
 ##' @import data.table
-##' @import readxl
+##' @importFrom readxl read_excel
 ##' @param dname data name in R
 ##' @param path Path to root AFS directory
 ##' @param dkey data key to match R data files to master files (default data_key)
@@ -28,8 +28,8 @@ get_data <- function(dname, path=get_afs(), dkey=sync.afs::data_key, ...) {
   path <- file.path(path, dkey[rname == dname, afs_path])
   res <- if (requireNamespace('rio', quietly=TRUE)) {
     if (rio:::get_ext(path) == 'sas7bdat') {
-        column.labels <- if ('column.labels' %in% names(m)) m[['column.labels']] else TRUE
-        rio::import(path, column.labels=column.labels, ...)
+      column.labels <- if ('column.labels' %in% names(m)) m[['column.labels']] else TRUE
+      rio::import(path, column.labels=column.labels, ...)
     } else rio::import(path, ...)
   } else {
     ## choose how to read
@@ -40,7 +40,7 @@ get_data <- function(dname, path=get_afs(), dkey=sync.afs::data_key, ...) {
                    'txt' = read.table,
                    'xls' = ,
                      'xlsx' = readxl::read_excel,
-                   fread)
+                   data.table::fread)
     res <- read(path, ...)
     ## Use rio instead
   }

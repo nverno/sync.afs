@@ -13,20 +13,27 @@ Imports:
     tools,
     igraph,
     data.table (>= 1.9.6),
-    readxl
+    readxl,
+    R6
 RoxygenNote: 5.0.1
 Collate:
+    'aaa.R'
+    'afs.R'
     'copy_files.R'
     'data.R'
     'utils.R'
     'file_info.R'
     'get_data.R'
     'make_key.R'
+    'options.R'
     'process_tracker.R'
+    'set_options.R'
     'sign_in.R'
     'update_key.R'
     'vis.R'
 Suggests:
     testthat,
     dplyr,
-    rio
+    rio,
+    knitr,
+    formattable
