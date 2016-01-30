@@ -2,19 +2,21 @@
 % Please edit documentation in R/vis.R
 \name{data_vis}
 \alias{data_vis}
-\title{data_vis}
+\title{Wrapper to visualize the location of files in the AFS directory.
+Processes a tracking document to get files prior to passing to directory_vis.}
 \usage{
-data_vis(tracker = file.path(get_afs(), "file_tracker.txt"),
-  path = get_afs(), add_root = TRUE, ...)
+data_vis(afs, tracker = getOption("afs.tracker"), add_root = TRUE, ...)
 }
 \arguments{
-\item{tracker}{Path to tracker file on AFS (has default)}
+\item{afs}{An AFS object with path set to user root}
 
-\item{path}{Path to root AFS folder (has default)}
+\item{tracker}{Path to tracker file (default getOption('afs.tracker'))}
 
 \item{add_root}{Logical to add root to graph}
 
 \item{...}{passed to plot.igraph}
+
+\item{path}{Path to root AFS folder (has default)}
 }
 \value{
 Returns the igraph invisibly.

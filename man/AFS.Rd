@@ -27,7 +27,7 @@ AFS class to interact with data on AFS
 \item{\code{print_tokens}}{Print the tokens table in a few formats.}
 }}
 \examples{
-AFS$new()
+AFS$new(cell='northstar.dartmouth.edu')
 }
 \keyword{datasets}
 

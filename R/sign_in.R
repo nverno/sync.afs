@@ -1,53 +1,36 @@
-##' Validate user input to be correct type
-##' @title Validate user input
-##' @param prompt Message to display to user
-##' @param expect Type expected as response
-##' @param allow_blank Allow empty responses
-validate_input <- function(prompt, expect='character', allow_blank=FALSE) {
-  while(TRUE) {
-    response <- readline(prompt=prompt)
-    if (expect %in% c('integer', 'numeric'))
-      response <- as(response, expect)
-    if (!is.null(response) && !is.na(response) &&
-        (allow_blank || nzchar(response))) break
-    cat(sprintf("Invalid input: expecting input of type %s\n", expect))
+##' Sign in to AFS, if options aren't supplied, try interactive
+##' ... ignored for now, but can be other options to klog
+signin <- function(user, pwd, cell, ...) {
+  cell <- if (missing(cell)) {
+    if (!is.na(self$cell)) {
+      self$cell
+    } else getOption('afs.cell')
   }
-  return( response )
+  if (missing(user) || missing(pwd)) {
+    if (interactive()) {
+      cat("\n\n*******************************************************\n")
+      cat("Attempting to sign in to AFS [Ctrl-C Ctrl-C to EXIT].\n")
+      while(TRUE) {
+        user <- readline("Enter username:")
+        pwd <- readline("Enter password:")
+        ncell <- readline(sprintf("Cell: (return to use default: %s)",
+          cell))
+        if (!nzchar(ncell)) cell <- ncell
+        dots <- readline("Other commands to pass to klog (hit return to skip):")
+        res <- private$submit(user, pwd, cell, dots)
+        if (!res) {
+          cat(sprintf('\n%s', as.vector(private$error)))
+          cat("\nTrying again (Ctrl-C Ctrl-C to EXIT).\n")
+        } else {
+          cat('\nSigned in successfully.\n')
+          cat('********************************************************\n')
+          return( TRUE )
+        }
+      }
+      FALSE
+    } else FALSE
+  } else {
+    private$submit(user, pwd, cell, ...)
+  }
 }
 
-##' Check for AFS, prompt for credentials and sign in if not
-##' @title Check for AFS tokens
-##' @export
-check_afs <- function() {
-  response <- system2("tokens", stdout=TRUE)
-  has_token <- is.character(response) && any(grepl("tokens for afs@", response))
-  if (has_token) return( invisible(TRUE) )
-  cat("\n\nNo tokens found for AFS.")
-  res <- FALSE
-  if (interactive()) {
-    res <- sign_in()
-  }
-  return( res )
-}
-
-##' Sign in to AFS
-##' @title Attempt to sign in to AFS using klog
-##' @export
-sign_in <- function() {
-  cat("\n\nAttempting to sign in to AFS with klog [Ctrl-C Ctrl-C to EXIT].\n")
-  while(TRUE) {
-    if (exists("res", inherits=FALSE))
-      cat("\nTrying again (Ctrl-C Ctrl-C to EXIT).\n")
-    username <- validate_input("Enter username:")
-    passwd <- validate_input("Enter password:")
-    other <- validate_input("Other commands to pass to klog (hit return to skip):",
-                            allow_blank = TRUE)
-    res <- system2("klog", args=c("-principal", username, "-password", passwd, other))
-    if (res == 0L) {
-      cat('\nSigned in successfully.')
-      return ( TRUE )
-    }
-  }
-  cat("\nFailed signing into AFS.  Please sign in manually.")
-  return ( FALSE )
-}

@@ -4,28 +4,49 @@
 ##' @importFrom R6 R6Class
 ##' @format An object of \code{\link{R6Class}} with methods to interact with AFS.
 ##' @examples
-##' AFS$new()
+##' AFS$new(cell='northstar.dartmouth.edu')
 ##' @field connected Checks if connected to AFS.
 ##' @field signin Sign in to AFS with credentials
 ##' @field logout Logout of AFS (remove all tokens)
 ##' @field get_tokens Get the current tokens held in the cache.
 ##' @field get_error Get the last error.
 ##' @field print_tokens Print the tokens table in a few formats.
+##' @include sign_in.R
 ##' @export
-AFS <- R6Class(
+AFS <- R6::R6Class(
   'AFS',
   public = list(
+    ## AFS paths
+    root = '//afs',  # root AFS path
+    cell = NA,       # cell
+    base = NA,       # user base directory 
+    path = NA,       # full path to base directory
+    
     ## When initializing, just check for sysutils and current tokens
     ## if the utils are available
-    initialize = function() {
+    initialize = function(cell, base) {
       private$has_utils <- private$utils()
-      if (!private$has_utils) 
+      if (!private$has_utils)
         stop("Can't connect to AFS without system utilities.")
       tokens <- private$get_tkns()
       if (length(tokens)) {
         private$tokens <- private$parse(tokens)
       }
+      if (!missing(cell)) {
+        self$cell <- cell
+      } else if (!is.null((opt <- getOption('afs.cell')))) {
+        self$cell <- opt
+      }
+      if (!missing(base)) {
+        self$base <- base
+      } else if (!is.null((opt <- getOption('afs.path')))) {
+        self$base <- opt
+      }
+      if (!is.na(self$root) && !is.na(self$cell) && !is.na(self$base))
+        self$path <- file.path(self$root, self$cell, self$base)
     },
+
+    ## Check to see if there are valid tokens in the cache.
     connected = function() {
       if (identical(NA, private$tokens)) {
         FALSE
@@ -33,23 +54,11 @@ AFS <- R6Class(
         any(private$tokens[, expires > as.POSIXct(Sys.time())])
       }
     },
-    signin = function(user, pwd, cell='northstar.dartmouth.edu', ...) {
-      if (missing(user) || missing(pwd)) return(FALSE)
-      res <- suppressWarnings(
-        system2("klog", 
-                args=c("-principal", user, 
-                       "-password", pwd,
-                       "-cell", cell), 
-                stderr=TRUE))
-      if (!length(res)) {
-        private$tokens <- private$parse(private$get_tkns())
-        private$error <- NA
-        return(TRUE)
-      } else {
-        private$error <- res
-        return(FALSE)
-      }
-    },
+    
+    ## sign in (interactive or non-interactive)
+    signin = signin,
+
+    ## Logout, removing all tokens from the cached (unlog)
     logout = function() {
       res <- system2('unlog')
       if (invisible(res == 0L)) {
@@ -61,8 +70,15 @@ AFS <- R6Class(
         FALSE
       }
     },
-    get_error = function() private$error,
-    get_tokens = function() private$tokens,
+
+    ## Get the last error (if not then NA) 
+    get_error = function() { private$error },
+
+    ## Get the current tokens (if none then NA)
+    get_tokens = function() { private$tokens },
+    
+    ## Should probably just make a generic print function here
+    ## Print the tokens table in different formats
     print_tokens = function(format=c('none', 'formattable', 'knitr')) {
       if (!self$connected()) return()
       type <- match.arg(format, format)
@@ -91,19 +107,37 @@ AFS <- R6Class(
     }
   ),
   
-  ## Private Methods
+  ## Private members/methods
   private = list(
     tokens = NA,
     has_utils = NA,
     error = NA,
-      
-    ## Check for system utils
+    
+    ## Check for required system utilities
     utils = function() {
       progs <- c('klog', 'tokens')
       command <- switch(Sys.info()['sysname'], 'Windows'='where', 'type')
       all(unlist(lapply(progs, system2, command=command, stdout=FALSE)) == 0L)
     },
-    ## Parse tokens to data.table
+    
+    ## Submit AFS credentials
+    submit = function(user, pwd, cell, ...) {
+      res <- suppressWarnings(
+        system2("klog", args=c("-principal", user, "-password", 
+                               pwd, "-cell", cell), 
+                stderr=TRUE)
+      )
+      if (!length(res)) {
+        private$tokens <- private$parse(private$get_tkns())
+        private$error <- NA
+        TRUE
+      } else {
+        private$error <- res
+        FALSE
+      }
+    },
+
+    ## Parse tokens to a data.table
     parse = function(tokens) {
       tokens <- strsplit(tokens, '\\s+|@')
       out <- lapply(tokens, function(x) {
@@ -115,7 +149,8 @@ AFS <- R6Class(
       })
       data.table::rbindlist(out)
     },
-    ## Get any user tokens
+
+    ## Query the system for any user tokens
     get_tkns = function() {
       response <- system2("tokens", stdout=TRUE, stderr=TRUE)
       has_token <- is.character(response) && 

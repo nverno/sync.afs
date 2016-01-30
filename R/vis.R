@@ -7,14 +7,13 @@ NULL
 ##' @param add_root logical whether to add root node to join all directories (default to TRUE).
 ##' @param ... Passed to plot.igraph
 ##' @return invisibly returns the graph.
-##' @import igraph
 ##' @export
 directory_vis <- function(finfo, add_root=TRUE, ...) {
     es <- data.frame(dirs = finfo$directory,
                      docs = finfo$rname,
                      weight = finfo$size,
                      mod = finfo$lastmod, stringsAsFactors = FALSE)
-
+    if (!requireNamespace(igraph, quietly = TRUE)) return()
     ## Get an idea of the layout
     g <- igraph::graph_from_data_frame(es[, c("dirs", "docs", "weight")])
 
@@ -30,13 +29,11 @@ directory_vis <- function(finfo, add_root=TRUE, ...) {
 
 ##' Wrapper to visualize the location of files in the AFS directory.
 ##' Processes a tracking document to get files prior to passing to directory_vis.
-##' @title data_vis
-##' @import igraph
-##' @import data.table
-##' @param tracker Path to tracker file on AFS (has default)
-##' @param path Path to root AFS folder (has default)
+##' @param afs An AFS object with path set to user root
+##' @param tracker Path to tracker file (default getOption('afs.tracker'))
 ##' @param add_root Logical to add root to graph
 ##' @param ... passed to plot.igraph
+##' @param path Path to root AFS folder (has default)
 ##' @examples
 ##' \dontrun{
 ##'
@@ -46,8 +43,8 @@ directory_vis <- function(finfo, add_root=TRUE, ...) {
 ##' }
 ##' @return Returns the igraph invisibly.
 ##' @export
-data_vis <- function(tracker=file.path(get_afs(), "file_tracker.txt"),
-                     path=get_afs(), add_root=TRUE, ...) {
+data_vis <- function(afs, tracker=getOption('afs.tracker'), add_root=TRUE, ...) {
+  if (!requireNamespace(igraph, quietly=TRUE)) return()
   dat <- process_tracker(tracker)
   finfo <- file_info(path, files=dat$files)
   directory_vis(finfo, add_root, ...)

@@ -2,12 +2,14 @@
 % Please edit documentation in R/process_tracker.R
 \name{process_tracker}
 \alias{process_tracker}
-\title{process_tracker}
+\title{Process the file tracking document ('file_tracker.txt').
+If files were renamd, replaces with new names.
+Also, if filenames are duplicated, they are removed.}
 \usage{
-process_tracker(tracker = file.path(get_afs(), "file_tracker.txt"))
+process_tracker(tracker = getOption("afs.tracker"))
 }
 \arguments{
-\item{tracker}{Path to file tracking file}
+\item{tracker}{Path to file tracking file (default getOption('afs.tracker))}
 }
 \value{
 list of two elements: filenames to track, and renamed files

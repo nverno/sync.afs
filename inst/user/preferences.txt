@@ -1,3 +1,4 @@
 ## Modify using afs_set_opts()
-path: //afs/northstar.dartmouth.edu/users/d/drp/MOOSHUBB/longterm/lixi kong
+path: users/d/drp/MOOSHUBB/longterm/lixi kong
 tracker: //afs/northstar.dartmouth.edu/users/d/drp/MOOSHUBB/longterm/lixi kong/file_tracker.txt
+cell: northstar.dartmouth.edu
