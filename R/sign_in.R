@@ -11,8 +11,8 @@ signin <- function(user, pwd, cell, ...) {
       cat("\n\n*******************************************************\n")
       cat("Attempting to sign in to AFS [Ctrl-C Ctrl-C to EXIT].\n")
       while(TRUE) {
-        user <- readline("Enter username:")
-        pwd <- readline("Enter password:")
+        user <- readline("Enter username: ")
+        pwd <- readline("Enter password: ")
         cat(sprintf('\n Logging in to cell %s', getOption('afs.cell')))
         ## dots <- readline("Other commands to pass to klog (hit return to skip):")
         res <- private$submit(user, pwd, cell, ...)
